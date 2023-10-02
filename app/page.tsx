@@ -38,6 +38,26 @@ export default function Home() {
     return reply;
   }
 
+  const [data, setData] = useState<
+    {
+      time: string;
+      weight: string;
+      url: string;
+      title: string;
+      pageLoadTime: string;
+      pageType: string;
+    }[]
+  >([
+    {
+      time: "c",
+      weight: "weight",
+      url: "url",
+      title: "title",
+      pageLoadTime: "pageLoadTime",
+      pageType: "pageType",
+    },
+  ]);
+
   function callLighthouse(text: string) {
     let data = {
       time: "time",
@@ -49,7 +69,21 @@ export default function Home() {
     };
     const reply = runLighthouse(text);
     reply.then((res) => (data = res));
-    return data;
+    console.log("data", data);
+    return reply;
+  }
+
+  function refreshLighthouseData(capiList: string[]) {
+    //array of lighthouse data
+    let listOfLighthouseResults = [];
+    for (let i = 0; i < capiList.length; i++) {
+      const result = callLighthouse(capiList[i]);
+      console.log("result", result);
+      result.then((res) => listOfLighthouseResults.push(res));
+      // listOfLighthouseResults.push(result);
+    }
+    setData(listOfLighthouseResults);
+    console.log("listOfLighthouseResults", listOfLighthouseResults);
   }
 
   // let listOfResults: any[] = [];
@@ -87,36 +121,6 @@ export default function Home() {
   const [Refresh, setRefresh] = useState(false);
   function refreshData() {
     setRefresh(!Refresh);
-  }
-
-  const [data, setData] = useState<
-    {
-      time: string;
-      weight: string;
-      url: string;
-      title: string;
-      pageLoadTime: string;
-      pageType: string;
-    }[]
-  >([
-    {
-      time: "c",
-      weight: "weight",
-      url: "url",
-      title: "title",
-      pageLoadTime: "pageLoadTime",
-      pageType: "pageType",
-    },
-  ]);
-
-  function refreshLighthouseData(capiList: string[]) {
-    //array of lighthouse data
-    let listOfLighthouseResults = [];
-    for (let i = 0; i < capiList.length; i++) {
-      const result = callLighthouse(capiList[i]);
-      listOfLighthouseResults.push(result);
-    }
-    setData(listOfLighthouseResults);
   }
 
   const [rowData, setRowData] = useState(data);
