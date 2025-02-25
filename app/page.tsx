@@ -167,7 +167,7 @@ export default function Home() {
         <tbody>
           {rowData.map((individualRowData) => {
             return (
-              <tr>
+              <tr key={individualRowData.url}>
                 <td>{individualRowData.time}</td>
                 <td>{individualRowData.pageType}</td>
                 <td>
