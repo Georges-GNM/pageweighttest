@@ -6,14 +6,6 @@ import { getArticles } from "./capiCaller";
 import { Button } from "@guardian/source-react-components";
 
 export default function Home() {
-  type dashboardData = {
-    time: string;
-    weight: string;
-    url: string;
-    title: string;
-    pageLoadTime: string;
-    pageType: string;
-  };
 
   const TimeUpdated = "Last updated at ...";
 
@@ -73,48 +65,14 @@ export default function Home() {
   }
 
   function refreshLighthouseData(capiList: string[]) {
-    //array of lighthouse data
     let listOfLighthouseResults: LighthouseData[] = [];
     for (let i = 0; i < capiList.length; i++) {
       const result = callLighthouse(capiList[i]);
-      console.log("result", result);
       result.then((res) => listOfLighthouseResults.push(res));
-      // listOfLighthouseResults.push(result);
     }
     setData(listOfLighthouseResults);
   }
 
-  // let listOfResults: any[] = [];
-  // function getList(listOfWebUrls: string[]) {
-  //   for (let i = 0; i < listOfWebUrls.length; i++) {
-  //     const result = callLighthouse(listOfWebUrls[i]);
-  //     const formattedResult = () => {
-  //       return (
-  //         <div>
-  //           <p>
-  //             {result.title} and
-  //             {result.weight}
-  //           </p>
-  //         </div>
-  //       );
-  //     };
-  //     listOfResults.push(formattedResult);
-  //   }
-  //   setCapiList(listOfResults);
-  // }
-  //list of urls
-
-  // function getData() {
-  //   const data = {
-  //     time: "time",
-  //     weight: "weight",
-  //     url: "url",
-  //     title: "title",
-  //     pageLoadTime: "pageLoadTime",
-  //     pageType: "pageType",
-  //   };
-  //   return data;
-  // }
 
   const [Refresh, setRefresh] = useState(false);
   function refreshData() {
@@ -127,24 +85,6 @@ export default function Home() {
     setRowData(data);
   }, [capiList, Refresh]);
 
-  // const rowData = [
-  //   {
-  //     time: "a",
-  //     weight: "weight",
-  //     url: "url",
-  //     title: "title",
-  //     pageLoadTime: "pageLoadTime",
-  //     pageType: "pageType",
-  //   },
-  //   {
-  //     time: "time",
-  //     weight: "weight",
-  //     url: "url",
-  //     title: "title",
-  //     pageLoadTime: "pageLoadTime",
-  //     pageType: "pageType",
-  //   },
-  // ];
   const ActualTable = () => {
     return (
       <table className="table-fixed">
@@ -177,21 +117,6 @@ export default function Home() {
       </table>
     );
   };
-
-  //     return (<div></div
-  //     (rowData?.map((row) => {
-  //       Row(row);
-  //     });)
-  //   };
-
-  //   <div
-  // >
-  //   <Hide until="desktop">
-  //     {largeVariant?.images.map((image) => {
-  //       return (
-  //         <>
-  //           <Picture
-  //             master={image.url}
 
   function checkCapilist(capiList: string[]) {
     console.log(capiList);

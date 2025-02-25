@@ -1,4 +1,4 @@
-//make sure to update/remove this eventually!
+
 
 export async function getArticles() {
   const url = `https://content.guardianapis.com/search?api-key=${process.env.CAPI_KEY}`;
