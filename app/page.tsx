@@ -126,9 +126,6 @@ export default function Home() {
   const [rowData, setRowData] = useState(data);
 
   useEffect(() => {
-    console.log("capilist here", capiList);
-    console.log("data here", data);
-    console.log("rowdata here", rowData);
     setRowData(data);
   }, [capiList, Refresh]);
 
@@ -204,7 +201,7 @@ export default function Home() {
 
   return (
     <main className="m-2">
-      <div className="text-3xl">Webpage performance of today's Pages</div>
+      <div className="text-3xl">Webpage performance of today&apos;s Pages</div>
       <div className="flex flex-row gap-4">
         {TimeUpdated}
 
