@@ -33,25 +33,25 @@ export default function Home() {
     const reply = getArticles()
       .then((res) => setCapiList(res))
       .then(() => {
-        console.log("got capilist: ", capiList);
       });
     return reply;
   }
 
-  const [data, setData] = useState<
-    {
-      time: string;
-      weight: string;
-      url: string;
-      title: string;
-      pageLoadTime: string;
-      pageType: string;
-    }[]
+  type LighthouseData = {
+    time: string;
+    weight: string;
+    url: {articleUrl: string};
+    title: string;
+    pageLoadTime: string;
+    pageType: string;
+  };
+
+  const [data, setData] = useState<LighthouseData[]
   >([
     {
       time: "c",
       weight: "weight",
-      url: "url",
+      url: {articleUrl: "url"},
       title: "title",
       pageLoadTime: "pageLoadTime",
       pageType: "pageType",
@@ -62,20 +62,19 @@ export default function Home() {
     let data = {
       time: "time",
       weight: "weight",
-      url: "url",
+      url: {articleUrl: "url"},
       title: "title",
       pageLoadTime: "pageLoadTime",
       pageType: "pageType",
     };
     const reply = runLighthouse(text);
-    reply.then((res) => (data = res));
-    console.log("data", data);
+    reply.then((res) => (data = res ));
     return reply;
   }
 
   function refreshLighthouseData(capiList: string[]) {
     //array of lighthouse data
-    let listOfLighthouseResults = [];
+    let listOfLighthouseResults: LighthouseData[] = [];
     for (let i = 0; i < capiList.length; i++) {
       const result = callLighthouse(capiList[i]);
       console.log("result", result);
@@ -83,7 +82,6 @@ export default function Home() {
       // listOfLighthouseResults.push(result);
     }
     setData(listOfLighthouseResults);
-    console.log("listOfLighthouseResults", listOfLighthouseResults);
   }
 
   // let listOfResults: any[] = [];
@@ -164,11 +162,11 @@ export default function Home() {
         <tbody>
           {rowData.map((individualRowData) => {
             return (
-              <tr key={individualRowData.url}>
+              <tr key={individualRowData.title}>
                 <td>{individualRowData.time}</td>
                 <td>{individualRowData.pageType}</td>
                 <td>
-                  <a href={individualRowData.url}>{individualRowData.title}</a>
+                  <a href={individualRowData.url.articleUrl}>{individualRowData.title}</a>
                 </td>
                 <td>{individualRowData.pageLoadTime}</td>
                 <td>{individualRowData.weight}</td>
